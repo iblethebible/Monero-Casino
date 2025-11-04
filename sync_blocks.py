@@ -38,7 +38,7 @@ def sync_blocks():
     db = mysql.connector.connect(
         host="localhost",
         user="casino_admin",
-        password="Bighead4548",
+        password="",
         database="monero_casino"
     )
     cursor = db.cursor()
@@ -80,5 +80,6 @@ def sync_blocks():
 
 if __name__ == "__main__":
     sync_blocks()
+
 
 ##
