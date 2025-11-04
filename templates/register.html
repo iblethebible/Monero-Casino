@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="POST">
+        <label>Username:</label>
+        <input type="text" name="username" required>
+<br>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+<br>
+        <button type="submit">Register</button>
+    </form>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('faq') }}">FAQ</a>
+</body>
+</html>

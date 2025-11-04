@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="EXPIRES" content="0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Your Profile</title>
+</head>
+<body>
+<h1>Profile</h1>
+<nav>
+    <a href="/home">Home</a> |
+    <a href="/faq">FAQ</a> |
+    <a href="/profile">Profile</a> | 
+    <a href="/bet">Place Bet</a> | 
+    <a href="/stats">Stats</a> | 
+    <a href="/jackpot">Jackpot</a> |
+    <a href="/convert">Convert</a> |
+    <a href="/withdraw">Withdraw</a> |
+
+    <a href="/logout">Logout</a>
+</nav>
+
+<div class="profile-container">
+    <div class="profile-info">
+        <h2>{{ username }}</h2>
+        <h3>Deposit Address:</h3>
+        <p>{{ deposit_address }}</p>
+        <img src="{{ url_for('generate_qr_code', address=deposit_address) }}" alt="QR Code">
+    </div>
+
+    <div class="balance-info">
+        <h2>Account Balance</h2>
+        <p>{{ '%.4f'|format(balance) }} XMR</p>
+        <form action="/withdraw" method="get" class="button-link-form">
+            <button type="submit" class="bet-form-button">Withdraw</button>
+        </form>
+    </div>
+</div>
+
+<h2>Betting History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Block</th>
+            <th>Amount</th>
+            <th>Choice</th>
+            <th>Game Type</th>
+            <th>Result</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bet in betting_history %}
+        <tr>
+            <td>{{ bet.block_height }}</td>
+            <td>{{ bet.amount }}</td>
+            <td>
+                {% if bet.chosen_number is not none %}
+                    {{ bet.chosen_number }}
+                {% elif bet.bet_value %}
+                    {{ bet.bet_value }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>{{ bet.game_type }}</td>
+            <td>{{ bet.result }}</td>
+            <td>{{ bet.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

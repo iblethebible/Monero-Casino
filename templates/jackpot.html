@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Weekly Jackpot</title>
+</head>
+<h1>Weekly Jackpot</h1>
+<nav>
+    <a href="/home">Home</a> |
+    <a href="/faq">FAQ</a> |
+    <a href="/profile">Profile</a> | 
+    <a href="/bet">Place Bet</a> | 
+    <a href="/stats">Stats</a> | 
+    <a href="/jackpot">Jackpot</a> |
+    <a href="/convert">Convert</a> |
+    <a href="/withdraw">Withdraw</a> |
+
+    <a href="/logout">Logout</a>
+</nav>
+<p><strong>Next Draw:</strong> Friday 23:59</p>
+<p><strong>Current Jackpot:</strong> {{ prize_pool }} XMR</p>
+
+<h2>Last Week's Winning Number: {{ winning_number }}</h2>
+
+<h3>Previous Winners</h3>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Winning Amount</th>
+    </tr>
+    {% for winner in previous_winners %}
+    <tr>
+        <td>{{ winner.username }}</td>
+        <td>{{ winner.amount }} XMR</td>
+    </tr>
+    {% endfor %}
+</table>
+</html>

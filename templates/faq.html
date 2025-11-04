@@ -1,0 +1,109 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Monero Casino</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>General Questions</h1>
+    <nav>
+        {% if session['user_id'] %}
+        <a href="/home">Home</a> |
+        <a href="/faq">FAQ</a> |
+        <a href="/profile">Profile</a> |
+        <a href="/bet">Place Bet</a> |
+        <a href="/stats">Stats</a> |
+        <a href="/jackpot">Jackpot</a> |
+        <a href="/convert">Convert</a> |
+        <a href="/withdraw">Withdraw</a> |
+
+
+        <a href="/logout">Logout</a> 
+        {% else %}
+        <a href="/login">Login</a> |
+        <a href="/register">Register</a> 
+        {% endif %}
+    </nav>
+
+    <div class="faq-item">
+        <h3>What is Monero Casino?</h3>
+        <p>Monero Casino is an anonymous online betting platform where users can place bets on the final two digits of Monero blockchain blocks. It is designed to be fair, decentralized, and provably fair using Monero blockchain data.</p>
+
+        <h3>How do I register?</h3>
+        <p>Click on the "Register" button on the login screen and create an account. Once registered, you will receive a unique Monero wallet address for deposits.</p>
+
+        <h3>Do I need to provide personal details to play?</h3>
+        <p>No! We do not require any personal details. You can play anonymously with your Monero wallet.</p>
+
+        <h3>What cryptocurrencies are supported?</h3>
+        <p>We only accept Monero (XMR) due to its privacy features and security.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Deposits & Withdrawals</h2>
+        <h3>How do I deposit funds?</h3>
+        <p>Navigate to your profile page, copy your unique Monero deposit address, and send XMR from your personal wallet. The balance will update once the transaction is confirmed.</p>
+
+        <h3>How do I withdraw my winnings?</h3>
+        <p>Go to your profile page, enter your withdrawal amount, and provide a Monero wallet address. Withdrawals are processed automatically.</p>
+
+        <h3>Is there a minimum deposit or withdrawal amount?</h3>
+        <p>Yes, the minimum deposit is <strong>0.01 XMR</strong>, and the minimum withdrawal is <strong>0.05 XMR</strong>. A small withdrawal fee applies to ensure the sustainability of the platform.</p>
+
+        <h3>How long does a withdrawal take?</h3>
+        <p>Withdrawals are processed instantly, but the time depends on the Monero network.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Betting System</h2>
+        <h3>How does betting work?</h3>
+        <p>You can bet on a number from <strong>00 to 99</strong>. If the last two digits of the next selected Monero block match your number, you win!</p>
+
+        <h3>How is the game provably fair?</h3>
+        <p>We use the hash of Monero blocks to determine the winning number, making it impossible for us to manipulate results. Users can verify results by checking the blockchain.</p>
+
+        <h3>How often can I place bets?</h3>
+        <p>You can place a bet at any time before the next block is selected for the game (every 5 blocks).</p>
+
+        <h3>Do all games have a house edge?</h3>
+        <p>Yes, every game is designed with a small house edge to ensure the long-term sustainability of the casino. This allows the platform to continue operating while offering fair and competitive betting options.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Weekly Jackpot Draw</h2>
+        <h3>What is the Weekly Jackpot Draw?</h3>
+        <p>Every <strong>Friday at 23:59 GMT</strong>, a winning number is drawn using the last Monero block of the day. All players who have placed bets throughout the week are automatically entered.</p>
+
+        <h3>How is the winning number for the jackpot chosen?</h3>
+        <p>The last 5 characters of the last Monero block hash of the week are converted into a decimal number and mod 100 to get a fair winning number.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Security & Privacy</h2>
+        <h3>How is my privacy protected?</h3>
+        <p>We do not store personal data. All transactions and bets are handled using Monero, which ensures privacy.</p>
+
+        <h3>Do you store my private keys?</h3>
+        <p>No, we never store private keys. You control your funds at all times.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Technical Questions</h2>
+        <h3>Can I verify the fairness of the game?</h3>
+        <p>Yes, all results are based on Monero blockchain hashes, which can be checked publicly.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Support</h2>
+        <h3>How do I contact support?</h3>
+        <p>Support is available through the <strong>onion hidden service</strong> or via our Monero chat group.</p>
+    </div>
+
+    <div class="faq-item">
+        <h2>Donate</h2>
+        <h3>House wallet code</h3>
+    </div>
+</body>
+</html>

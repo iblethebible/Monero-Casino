@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Convert</title>
+</head>
+<body>
+    <h1>Convert</h1>
+    <nav>
+        <a href="/home">Home</a> |
+        <a href="/faq">FAQ</a> |
+        <a href="/profile">Profile</a> | 
+        <a href="/bet">Place Bet</a> | 
+        <a href="/stats">Stats</a> | 
+        <a href="/jackpot">Jackpot</a> |
+        <a href="/convert">Convert</a> |
+        <a href="/withdraw">Withdraw</a> |
+
+        <a href="/logout">Logout</a>
+    </nav>
+<form action="/convert" method="POST">
+    <label for="fiat_amount">Enter amount in fiat:</label>
+    <input type="number" id="fiat_amount" name="fiat_amount" step="0.01" required>
+
+    <label for="currency">Select currency:</label>
+    <select id="currency" name="currency">
+        <option value="usd">USD</option>
+        <option value="eur">EUR</option>
+        <option value="gbp">GBP</option>
+    </select>
+
+    <button type="submit">Convert</button>
+</form>
+
+{% if xmr_equivalent %}
+    <p>{{ fiat_amount }} {{ currency.upper() }} ≈ {{ xmr_equivalent|round(12) }} XMR</p>
+{% elif error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+</body>
+</html>

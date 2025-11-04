@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Casino Home</title>
+</head>
+<body>
+    <h1>Monero Casino</h1>
+    <nav>
+        <a href="/home">Home</a> |
+        <a href="/faq">FAQ</a> |
+        <a href="/profile">Profile</a> | 
+        <a href="/bet">Place Bet</a> | 
+        <a href="/stats">Stats</a> | 
+        <a href="/jackpot">Jackpot</a> |
+        <a href="/convert">Convert</a> |
+        <a href="/withdraw">Withdraw</a> |
+
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="home-container">
+        <div class="left">
+            <h2>Current Block Height</h2>
+            <p>{{ latest_block }}</p>
+        </div>
+        <div class="right">
+            <h2>Next Betting Block</h2>
+            <p>{{ next_bet_block }}</p>
+        </div>
+    </div>
+        
+    <div class="home-container">
+        <div class="left">
+            <h2>Current Weekly Jackpot</h2>
+            <p></p>
+        </div>
+        <div class="right">
+            <h2>Recent Wins</h2>
+            <p></p>
+        </div>
+    </div>
+
+</body>
+</html>

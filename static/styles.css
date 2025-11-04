@@ -1,0 +1,302 @@
+/* Global Casino Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+}
+
+/* Centered Titles */
+h1, h2, h3 {
+    text-align: center;
+    margin: 20px 0;
+    color: #ff0000;
+}
+
+/* Page Container */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Navigation Bar */
+nav {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #333;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+nav a:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* Forms and Buttons */
+form {
+    margin: 20px auto;
+    padding: 20px;
+    background: #333;
+    border-radius: 5px;
+    width: 80%;
+}
+/* Remove dark background/padding from this specific form */
+form.button-link-form {
+    margin: 0;
+    padding: 0;
+    background: none;
+    width: auto;
+    display: inline; /* Or flex if needed */
+}
+
+/* Optional: tweak button inside if needed */
+form.button-link-form .bet-form-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form.button-link-form .bet-form-button:hover {
+    background-color: darkorange;
+}
+
+
+/* Betting Page Layout */
+.betting-container {
+    display: flex;
+    justify-content: space-around; /* Keeps even spacing without causing overflow */
+    flex-wrap: wrap; /* Ensures wrapping if space runs out */
+    padding: 20px;
+}
+
+.stat-box {
+    width: 45%;
+    min-width: 280px;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #111;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensures padding is included in width */
+    flex-direction: column;
+    justify-content: center;
+}
+
+.success {
+    color: green;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+
+/* Ensure bet-box and form are perfectly aligned */
+.bet-box {
+    width: 32%;
+    min-width: 280px;
+    max-width: 350px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    background-color: #111;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensures padding is included in width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers all contents */
+    justify-content: center;
+}
+
+/* Ensure the form fits perfectly inside bet-box */
+.bet-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Ensures perfect centering */
+    width: 100%; 
+    max-width: 90%; /* Prevents it from exceeding bet-box */
+    margin: 0 auto; /* Ensures centering */
+}
+
+/* Ensure all form elements are the same width */
+.bet-form input,
+.bet-form select,
+.bet-form button {
+    width: calc(100% - 10px); /* Ensures all elements align */
+    max-width: 240px; /* Prevents stretching too far */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box; /* Ensures consistent sizing */
+}
+
+/* Ensure button matches the input width */
+.bet-form button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.bet-form button:hover {
+    background-color: #c9302c;
+}
+
+/* Remove number input spinners in Chrome, Safari, Edge, and Opera */
+.bet-form input[type="number"]::-webkit-outer-spin-button,
+.bet-form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove number input spinners in Firefox */
+.bet-form input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
+
+
+input, button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+input {
+    width: 80%;
+    background: #222;
+    color: white;
+}
+button {
+    background: #ff0000;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background: #ff4500;
+}
+
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left, .right {
+    width: 45%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color:rgb(0, 0, 0);
+    text-align: center;
+}
+
+.wrapper {
+    padding: 20px;
+}
+
+/* Betting History Table Styling */
+table {
+    width: 90%; /* Prevent table from touching screen edges */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse;
+    background-color: #c88d8d;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+table th {
+    background-color: #333;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #574545;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+
+
+.profile-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevents wrapping */
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 20px;
+    background-color: #111;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info, .balance-info {
+    width: 48%;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    background-color: #111;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* explicitly centers horizontally */
+    overflow-wrap: anywhere; /* explicitly prevents overflow */
+    word-break: break-all; /* explicitly ensures long strings break properly */
+}
+
+.profile-info img {
+    max-width: 150px;
+    margin-top: 10px;
+    align-self: center; /* explicitly centers the QR code */
+}
+
+
+.house-edge {
+    font-size: 14px;
+    color: #ffcc00;
+    margin-bottom: 5px;
+}

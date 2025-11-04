@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Place Bet</title>
+</head>
+<body>
+    <h1>Place Your Bets for block {{ next_bet_block }}</h1>
+    <nav>
+        <a href="/home">Home</a> |
+        <a href="/faq">FAQ</a> |
+        <a href="/profile">Profile</a> |
+        <a href="/bet">Place Bet</a> |
+        <a href="/stats">Stats</a> |
+        <a href="/jackpot">Jackpot</a> |
+        <a href="/convert">Convert</a> |
+        <a href="/withdraw">Withdraw</a> |
+
+        <a href="/logout">Logout</a>
+    </nav>
+    <p>Enter your bet amount in Monero (XMR). Use a fiat-to-XMR converter if needed. Press submit to place your bet. Use the convert tab for major currencies.</p>
+
+    <div class="betting-container">
+        <!-- Game 1 -->
+        <div class="bet-box">
+            <h2>Bet on Last Two Digits</h2>
+            <p class="house-edge">House Edge: 3% (Payout: 98x instead of 99x)</p>
+            <form class="bet-form" action="/place_bet" method="POST">
+                <input type="hidden" name="game_type" value="digits">
+                <label for="bet_amount_digits">Bet Amount (XMR):</label>
+                <input type="number" id="bet_amount_digits" name="bet_amount" step="0.000000000001" min="0.000000000001" required>
+
+                <label for="chosen_number_digits">Choose Number (00-99):</label>
+                <input type="number" id="chosen_number_digits" name="chosen_number" min="0" max="99" required>
+
+                <button type="submit">Place Bet</button>
+            </form>
+        </div>
+
+        <!-- Game 2 -->
+        <div class="bet-box">
+            <h2>Bet on Odd or Even</h2>
+            <p class="house-edge">House Edge: 2% (Payout: 1.96x instead of 2x)</p>
+            <form class="bet-form" action="/place_bet" method="POST">
+                <input type="hidden" name="game_type" value="odd_even">
+                <label for="bet_amount_odd_even">Bet Amount (XMR):</label>
+                <input type="number" id="bet_amount_odd_even" name="bet_amount" step="0.000000000001" min="0.000000000001" required>
+
+                <label for="chosen_option">Choose:</label>
+                <select id="chosen_option" name="chosen_option" required>
+                    <option value="odd">Odd</option>
+                    <option value="even">Even</option>
+                </select>
+
+                <button type="submit">Place Bet</button>
+            </form>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="bet-box">
+            <h2>Bet on High or Low</h2>
+            <p class="house-edge">House Edge: 2.5% (Payout: 1.95x instead of 2x)</p>
+            <form class="bet-form" action="/place_bet" method="POST">
+                <input type="hidden" name="game_type" value="high_low">
+                <label for="bet_amount_high_low">Bet Amount (XMR):</label>
+                <input type="number" id="bet_amount_high_low" name="bet_amount" step="0.000000000001" min="0.000000000001" required>
+
+                <label for="chosen_high_low">Choose:</label>
+                <select id="chosen_high_low" name="chosen_high_low" required>
+                    <option value="high">High (50-99)</option>
+                    <option value="low">Low (00-49)</option>
+                </select>
+
+                <button type="submit">Place Bet</button>
+            </form>
+        </div>
+    </div>
+
+    {% if active_digits_bets or active_odd_even_bets or active_high_low_bets %}
+    <h2>Active Bets for Block {{ next_bet_block }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Game Type</th>
+                <th>Bet Amount (XMR)</th>
+                <th>Selection</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bet in active_digits_bets %}
+                <tr>
+                    <td>Last Two Digits</td>
+                    <td>{{ bet[0] }}</td>
+                    <td>{{ bet[1] }}</td>
+                </tr>
+            {% endfor %}
+
+            {% for bet in active_odd_even_bets %}
+                <tr>
+                    <td>Odd/Even</td>
+                    <td>{{ bet[0] }}</td>
+                    <td>{{ bet[1] }}</td>  <!-- will now be 'odd' or 'even' -->
+                </tr>
+            {% endfor %}
+
+            {% for bet in active_high_low_bets %}
+                <tr>
+                    <td>High/Low</td>
+                    <td>{{ bet[0] }}</td>
+                    <td>{{ bet[1] }}</td> <!-- will now be 'high' or 'low' -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No active bets for this block.</p>
+    {% endif %}
+</body>
+</html>

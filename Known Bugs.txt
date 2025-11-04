@@ -1,0 +1,29 @@
+<---TODO-->
+Admin Dashboard
+Add environment elements so can add to GitHub safely
+Contact me page
+Test fuck out of it
+
+<---WITHDRAWALS--->
+Rounding error on withdrawal -> FIX = Take one digit from deposit amount eg if 0.2244 doesn't work try 0.2243
+Error messages are not done -> Be patient
+
+<---Placing bets--->
+Not Started any
+Error messages
+
+<---Scheduler needs fixing--->
+Scheduler currently doesn't operate how id like it to but I think it has to be deployed to fix it
+
+
+<---End Of Project--->
+
+Torrify node and make it public
+
+Add a whole page comprehensively explaining how its truly random
+
+In order for correct balances to show the check deposits scheduler must be fixed
+
+Preloaded accounts for testers
+
+##

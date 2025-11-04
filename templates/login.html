@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Monero Casino</title>
+</head>
+<body>
+<form method="POST" action="{{ url_for('login') }}">
+    <h1>Monero Casino</h1>
+    <label>Username:</label>
+    <input type="text" name="username" required>
+<br>
+    <label>Password:</label>
+    <input type="password" name="password" required>
+<br>
+    <button type="submit">Login</button>
+</form>
+<a href="{{ url_for('faq') }}">FAQ</a>
+<a href="{{ url_for('register') }}">Register</a>
+</body>
+</html>

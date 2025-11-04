@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Withdraw Funds</title>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="EXPIRES" content="0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Withdraw Funds</h1>
+<nav>
+    <a href="/home">Home</a> |
+    <a href="/faq">FAQ</a> |
+    <a href="/profile">Profile</a> | 
+    <a href="/bet">Place Bet</a> | 
+    <a href="/stats">Stats</a> | 
+    <a href="/jackpot">Jackpot</a> |
+    <a href="/convert">Convert</a> |
+    <a href="/withdraw">Withdraw</a> |
+    <a href="/logout">Logout</a>
+</nav>
+    <div class="container">
+        <p><strong>Available Balance:</strong> {{ "%.4f"|format(balance|float) }} XMR</p>
+        <p>Enter the Monero address you'd like to send your funds to and the amount you'd like to withdraw:</p>
+        
+        <form action="/withdraw" method="post" class="bet-form">
+            <label for="withdraw_address">Destination Monero Address:</label>
+            <input type="text" id="withdraw_address" name="withdraw_address" required>
+
+            <label for="withdraw_amount">Amount (XMR):</label>
+            <input type="number" step="0.000001" id="withdraw_amount" name="withdraw_amount" required>
+
+            <button type="submit">Withdraw</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+        <p class="info-text">⚠️ Minimum withdrawal: <strong>0.05 XMR</strong>. A small fee may apply.</p>
+        <p class="info-text">⚠️ Please double-check the destination address before submitting your withdrawal. We will not be held liable for lost funds in case of incorrect address.</p>
+    </div>
+</body>
+</html>

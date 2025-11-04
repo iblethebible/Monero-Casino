@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Admin</title>
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+<nav>
+  <a href="/admin_withdrawal">Admin Withdrawal</a> |
+    <a href="/logout">Logout</a>
+</nav>
+
+<h2>📊 Casino Stats</h2>
+
+  <strong>Total Users:</strong> {{ total_users }}<br>
+  <strong>House Wallet Balance:</strong> {{ '%.12f' | format(house_balance) }} XMR<br>
+  <strong>Total Wagered:</strong> {{ total_wagered }} XMR<br>
+  <strong>Total Paid Out:</strong> {{ total_payout }} XMR<br>
+  <strong>Profit:</strong> {{ total_wagered - total_payout }} XMR<br>
+
+
+<h2>🎰 Recent Bets</h2>
+<table border="1" cellpadding="5">
+  <tr>
+    <th>User</th>
+    <th>Game</th>
+    <th>Bet</th>
+    <th>Guess</th>
+    <th>Bet Value</th>
+    <th>Status</th>
+    <th>Block</th>
+  </tr>
+  {% for bet in recent_bets %}
+  <tr>
+    <td>{{ bet[1] }} (ID: {{ bet[0] }})</td>
+    <td>{{ bet[2] }}</td>
+    <td>{{ bet[3] }}</td>
+    <td>{{ bet[4] if bet[4] is not none else '-' }}</td>
+    <td>{{ bet[5] if bet[5] is not none else '-' }}</td>
+    <td>{{ bet[6] }}</td>
+    <td>{{ bet[7] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</body>
+</html>
