@@ -1,5 +1,5 @@
 # Monero-Casino
-Online casino which is provably fair with a transparent random number generating system for the results using the hash from blocks on the Monero blockchain. Built in python and hosted on a flask web server with a MySQL database the application has three betting options. 
+Online casino which is provably fair with a transparent random number generating system for the results using the hash from blocks mined on the Monero blockchain. Built in python and hosted on a flask web server with a MySQL database the application has three betting options. 
 1. A bet on the number being odd or even.
 2.  A bet on the exact outcome.
 3.  A bet on it being above or below 50.
