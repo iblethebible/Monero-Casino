@@ -1,4 +1,8 @@
 # Monero-Casino
+For the F01–F04 fixes, database migration, required secret/environment settings,
+withdrawal recovery worker and tests, see [CRITICAL-FIXES.md](CRITICAL-FIXES.md).
+The other audited issues remain open; use disposable stagenet funds for QA.
+
 Online casino which is provably fair with a transparent random number generating system for the results using the hash from blocks mined on the Monero blockchain. Built in python and hosted on a flask web server with a MySQL database the application has three betting options. 
 1. A bet on the number being odd or even.
 2.  A bet on the exact outcome.

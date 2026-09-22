@@ -6,6 +6,9 @@
 </head>
 <body>
     <h1>Place Your Bets for block {{ next_bet_block }}</h1>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
     <nav>
         <a href="/home">Home</a> |
         <a href="/faq">FAQ</a> |
