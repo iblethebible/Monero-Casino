@@ -65,10 +65,11 @@ sync and withdrawal worker. Daemon and wallet RPC can use HTTP Digest credential
 through their respective `MONERO_*_RPC_USER/PASSWORD` variables; protect their
 network access and transport.
 
-`check_deposits.py` remains outside this fix's scope and still has its separate
-hardcoded configuration and audited defects. Do not assume `.env.example` changes
-its destination or database. Use disposable stagenet assets for QA. Other audit
-findings still block a real-money launch.
+The subsequent F07–F10 changes replace `check_deposits.py` and use the shared
+environment configuration. Apply migration 002 as described in
+[DEPOSIT-SAFETY.md](DEPOSIT-SAFETY.md) before running this version of the app or
+workers. Use disposable stagenet assets for QA. Other audit findings still block
+a real-money launch.
 
 ## Round settlement
 
@@ -134,8 +135,8 @@ display it in logs, UI or support exports.
 
 Fees are recorded on the withdrawal and charged to the house, preserving the
 requested destination amount. This does **not** fix the broader F15 house-ledger
-model or guarantee solvency. Existing unsafe admin-reserve, deposit and sweep
-behavior still requires the separately audited work.
+model or guarantee solvency. The subsequent deposit fixes remove automatic sweeps
+and pause spending for deposits requiring reconciliation; see DEPOSIT-SAFETY.md.
 
 Monero protocol basis: [transfer](https://docs.getmonero.org/rpc-library/wallet-rpc/#transfer)
 supports construction without relay and metadata return;

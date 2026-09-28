@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% if deposit_hold %}
+    <p class="flash error">Withdrawals are temporarily paused while a deposit is under review. Reserved requests remain pending.</p>
+    {% endif %}
     <h1>Withdraw Funds</h1>
 <nav>
     <a href="/home">Home</a> |

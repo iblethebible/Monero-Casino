@@ -54,12 +54,18 @@ def reserve_withdrawal(user_id, kind, address, amount_text, request_id):
         if kind == 'user':
             wallet_id = user['wallet_id']
             cur.execute('''UPDATE wallets SET virtual_balance=virtual_balance-%s
-                           WHERE id=%s AND user_id=%s AND virtual_balance >= %s''',
+                           WHERE id=%s AND user_id=%s AND virtual_balance >= %s
+                           AND deposit_hold=0''',
                         (amount, wallet_id, user_id, amount))
         else:
+            cur.execute('SELECT id FROM wallets WHERE deposit_hold=1 LIMIT 1 FOR UPDATE')
+            if cur.fetchone():
+                raise ValueError('House withdrawals are paused while a deposit is under review.')
             cur.execute('''UPDATE admin_wallets SET balance=balance-%s
                            WHERE id=%s AND balance >= %s''', (amount, house['id'], amount))
         if cur.rowcount != 1:
+            if kind == 'user':
+                raise ValueError('Insufficient available balance or deposit review in progress.')
             raise ValueError('Insufficient available balance.')
         cur.execute('''INSERT INTO withdrawals
                        (request_id,user_id,kind,wallet_id,admin_wallet_id,address,amount)
@@ -115,6 +121,25 @@ def process_withdrawal(withdrawal_id):
         if not row or row['state'] in ('submitted', 'failed'):
             conn.commit()
             return row
+        if row['kind'] == 'user':
+            cur.execute('SELECT deposit_hold FROM wallets WHERE id=%s AND user_id=%s FOR UPDATE',
+                        (row['wallet_id'], row['user_id']))
+            owner = cur.fetchone()
+            if not owner:
+                raise RuntimeError('Reservation owner missing.')
+            held = bool(owner['deposit_hold'])
+        else:
+            cur.execute('SELECT id FROM wallets WHERE deposit_hold=1 LIMIT 1 FOR UPDATE')
+            held = cur.fetchone() is not None
+        if held:
+            # A known broadcast must still be finalized so accounting catches up.
+            # Reserved rows and unbroadcast prepared rows retain their reservation.
+            if row['state'] != 'prepared' or not _already_relayed(row):
+                conn.commit()
+                return row
+            known = True
+        else:
+            known = False
         if row['state'] == 'reserved':
             # An unresolved signed transaction may own inputs needed by a new one.
             cur.execute("SELECT id FROM withdrawals WHERE state='prepared' AND id<>%s LIMIT 1", (withdrawal_id,))
@@ -146,7 +171,7 @@ def process_withdrawal(withdrawal_id):
             cur.execute('SELECT * FROM withdrawals WHERE id=%s FOR UPDATE', (withdrawal_id,))
             row = cur.fetchone()
             known = False
-        else:
+        elif not known:
             known = _already_relayed(row)
         if not known:
             result = wallet_rpc.call('relay_tx', {'hex': row['tx_metadata']})

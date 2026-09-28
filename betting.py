@@ -31,15 +31,18 @@ def place_bet(user_id, amount_text, game_type, selection):
         block = cur.fetchone()
         if block['resolved_at'] is not None or block['block_hash'] not in ('pending', ''):
             raise ValueError('This round is closed. Please try the next round.')
-        cur.execute('''SELECT w.id FROM wallets w JOIN users u ON u.wallet_id = w.id
-                       WHERE u.id = %s AND w.user_id = u.id''', (user_id,))
+        cur.execute('''SELECT w.id, w.deposit_hold FROM wallets w JOIN users u ON u.wallet_id = w.id
+                       WHERE u.id = %s AND w.user_id = u.id FOR UPDATE''', (user_id,))
         wallet = cur.fetchone()
         if not wallet:
             raise ValueError('No active wallet.')
+        if wallet['deposit_hold']:
+            raise ValueError('Betting is paused while a deposit is under review.')
         cur.execute('''UPDATE wallets SET virtual_balance = virtual_balance - %s
-                       WHERE id = %s AND virtual_balance >= %s''', (amount, wallet['id'], amount))
+                       WHERE id = %s AND virtual_balance >= %s AND deposit_hold = 0''',
+                    (amount, wallet['id'], amount))
         if cur.rowcount != 1:
-            raise ValueError('Insufficient available balance.')
+            raise ValueError('Insufficient available balance or deposit review in progress.')
         # Recheck after BOTH round and wallet locks: a request may have waited
         # on either. A crossed cutoff rolls the provisional debit back too.
         if height != next_betting_height(get_chain_tip()):

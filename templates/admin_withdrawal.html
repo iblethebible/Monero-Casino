@@ -5,6 +5,9 @@
     <title>Admin Withdrawal</title>
 </head>
 <body>
+{% if deposit_hold %}
+<p class="flash error">House withdrawals are temporarily paused while a deposit is under review.</p>
+{% endif %}
 <h1>Admin Withdrawal</h1>
 <nav>
     <a href="/admin">Admin Dashboard</a> |

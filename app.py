@@ -215,15 +215,17 @@ def profile():
 
 
     # Fetch the deposit address and virtual balance
-    cursor.execute("SELECT address, virtual_balance FROM wallets WHERE id = %s", (wallet_id,))
+    cursor.execute("SELECT address, virtual_balance, deposit_hold FROM wallets WHERE id = %s", (wallet_id,))
     wallet = cursor.fetchone()
 
 
     if wallet:
         print(f"Fetched wallet: {wallet}")
         deposit_address, virtual_balance = wallet[0], float(wallet[1]) if wallet[1] else 0.0
+        deposit_hold = bool(wallet[2])
     else:
         deposit_address, virtual_balance = "No Address Found", 0.0
+        deposit_hold = False
 
         session["balance"] = virtual_balance  # Update balance in the session
 
@@ -265,6 +267,7 @@ def profile():
         deposit_address=deposit_address,
         qr_code_filename=qr_code_filename,
         balance=virtual_balance,
+        deposit_hold=deposit_hold,
         betting_history=betting_history
     )
 
@@ -418,10 +421,14 @@ def _withdrawal_page(kind):
     try:
         if kind == "admin":
             cur.execute("SELECT balance AS available FROM admin_wallets WHERE label='house'")
+            wallet = cur.fetchone()
+            cur.execute("SELECT EXISTS(SELECT 1 FROM wallets WHERE deposit_hold=1) AS deposit_hold")
+            deposit_hold = bool(cur.fetchone()["deposit_hold"])
         else:
-            cur.execute("""SELECT w.virtual_balance AS available FROM wallets w
+            cur.execute("""SELECT w.virtual_balance AS available,w.deposit_hold FROM wallets w
                            JOIN users u ON u.wallet_id=w.id WHERE u.id=%s AND w.user_id=u.id""", (user_id,))
-        wallet = cur.fetchone()
+            wallet = cur.fetchone()
+            deposit_hold = bool(wallet["deposit_hold"]) if wallet else False
         cur.execute("""SELECT request_id,address,amount,state,tx_hash,created_at FROM withdrawals
                        WHERE user_id=%s AND kind=%s ORDER BY id DESC LIMIT 20""", (user_id, kind))
         history = cur.fetchall()
@@ -430,7 +437,8 @@ def _withdrawal_page(kind):
         conn.close()
     return render_template("admin_withdrawal.html" if kind == "admin" else "withdraw.html",
                            balance=wallet["available"] if wallet else Decimal("0"),
-                           request_id=str(uuid4()), withdrawals=history)
+                           request_id=str(uuid4()), withdrawals=history,
+                           deposit_hold=deposit_hold)
 
 
 @app.route("/withdraw", methods=["GET", "POST"])

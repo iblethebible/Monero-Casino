@@ -8,7 +8,10 @@ class BettingTests(unittest.TestCase):
     def test_cutoff_crossing_while_waiting_for_wallet_rolls_back_debit(self):
         conn, cur = Mock(), Mock()
         conn.cursor.return_value = cur
-        cur.fetchone.side_effect = [{'id': 1, 'resolved_at': None, 'block_hash': 'pending'}, {'id': 2}]
+        cur.fetchone.side_effect = [
+            {'id': 1, 'resolved_at': None, 'block_hash': 'pending'},
+            {'id': 2, 'deposit_hold': 0},
+        ]
         cur.rowcount = 1
         with patch.object(betting, 'get_db_connection', return_value=conn), \
                 patch.object(betting, 'get_chain_tip', side_effect=[101, 104]):
