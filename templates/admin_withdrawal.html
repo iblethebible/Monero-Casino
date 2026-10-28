@@ -5,6 +5,9 @@
     <title>Admin Withdrawal</title>
 </head>
 <body>
+{% if deposit_hold %}
+<p class="flash error">House withdrawals are temporarily paused while a deposit is under review.</p>
+{% endif %}
 <h1>Admin Withdrawal</h1>
 <nav>
     <a href="/admin">Admin Dashboard</a> |
@@ -14,6 +17,7 @@
 <p>Current House Wallet Balance: {{ balance }} XMR</p>
 
 <form method="POST">
+  <input type="hidden" name="request_id" value="{{ request_id }}">
   <label>Withdraw to Address:</label><br>
   <input type="text" name="withdraw_address" required><br><br>
   
@@ -32,3 +36,6 @@
 {% endwith %}
 
 </form>
+{% include 'withdrawal_history.html' %}
+</body>
+</html>

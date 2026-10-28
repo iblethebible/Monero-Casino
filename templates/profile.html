@@ -7,6 +7,9 @@
     <title>Your Profile</title>
 </head>
 <body>
+    {% if deposit_hold %}
+    <p class="flash error">Account activity is temporarily paused while a deposit is under review.</p>
+    {% endif %}
 <h1>Profile</h1>
 <nav>
     <a href="/home">Home</a> |

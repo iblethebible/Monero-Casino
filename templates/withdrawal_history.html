@@ -1,0 +1,21 @@
+<h2>Recent withdrawal requests</h2>
+<p>Pending requests keep their funds reserved. Retry continues the same request without reserving more funds.</p>
+<table>
+  <tr><th>Created</th><th>Amount (XMR)</th><th>Status</th><th>Transaction</th><th>Action</th></tr>
+  {% for withdrawal in withdrawals %}
+  <tr>
+    <td>{{ withdrawal.created_at }}</td>
+    <td>{{ '%.12f'|format(withdrawal.amount) }}</td>
+    <td>{{ {'reserved':'Pending', 'prepared':'Pending confirmation of submission', 'submitted':'Submitted', 'failed':'Failed — funds released'}[withdrawal.state] }}</td>
+    <td>{{ withdrawal.tx_hash or 'Awaiting transaction' }}</td>
+    <td>{% if withdrawal.state in ['reserved', 'prepared'] %}
+      <form method="POST">
+        <input type="hidden" name="request_id" value="{{ withdrawal.request_id }}">
+        <input type="hidden" name="withdraw_address" value="{{ withdrawal.address }}">
+        <input type="hidden" name="withdraw_amount" value="{{ withdrawal.amount }}">
+        <button type="submit">Retry</button>
+      </form>
+    {% endif %}</td>
+  </tr>
+  {% else %}<tr><td colspan="5">No withdrawal requests yet.</td></tr>{% endfor %}
+</table>
